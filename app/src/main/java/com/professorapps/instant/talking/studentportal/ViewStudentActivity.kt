@@ -46,28 +46,35 @@ class ViewStudentActivity : AppCompatActivity() {
             originalList.removeAll { it.isSelected } // keep both lists in sync
             studentadapter.notifyDataSetChanged()
         }
-
-        binding.searchInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s.toString().trim().lowercase()
-                studentList.clear()
-
-                if (query.isEmpty()) {
-                    studentList.addAll(originalList)
-                } else {
-                    val filtered = originalList.filter {
-                        it.Student_name.lowercase().contains(query)
-                    }
-                    studentList.addAll(filtered)
+            binding.searchInputEditText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
 
-                studentadapter.notifyDataSetChanged()
-            }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val query = s.toString().trim().lowercase()
+                    studentList.clear()
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+                    if (query.isEmpty()) {
+                        studentList.addAll(originalList)
+                    } else {
+                        val filtered = originalList.filter {
+                            it.Student_name.lowercase().contains(query)
+                        }
+                        studentList.addAll(filtered)
+                    }
+
+                    studentadapter.notifyDataSetChanged()
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
+
     }
-    }
+}
 
